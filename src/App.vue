@@ -1,7 +1,7 @@
 <template>
 <IncomeHeader :totalIncome="state.totalIncome"></IncomeHeader>
 <IncomeForm  @add-income="AddIncome"></IncomeForm>
-<IncomeList :state="state"></IncomeList>
+<IncomeList :state="state" @remove-item="removeItem"></IncomeList>
 </template>
 
 
@@ -54,8 +54,13 @@ export default {
          console.log(state.income)
        }
 
+
+       function removeItem(id) {
+        state.income = state.income.filter(v=> v.id != id)
+       }
+
       return {
-        state,AddIncome
+        state,AddIncome,removeItem
       }
     }
 }

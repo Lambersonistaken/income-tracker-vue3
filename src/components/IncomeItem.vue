@@ -1,7 +1,7 @@
 <template>
 
   <div class="income-item">
-        <div class="remove-item">x</div>
+        <div class="remove-item" @click="removeItem">x</div>
     <div class="desc">{{ income.desc }}</div>
     <div class="price">${{income.value}}</div>
     <div class="date">{{formattedDate}}</div>
@@ -16,7 +16,7 @@ export default {
     income: Object
   },
 
-  setup (props) {
+  setup (props,{emit}) {
       let date = new Date(props.income.date)
       let day = date.getDate()
       let month = date.getMonth()
@@ -24,9 +24,12 @@ export default {
 
       let formattedDate = day + "/" + month + "/" + year
 
+      function removeItem() {
+        emit("remove-item",props.income.id)
+      }
 
       return {
-        formattedDate
+        formattedDate,removeItem
       }
 
   }
@@ -46,6 +49,7 @@ export default {
   margin: 0 auto 30px;
 }
 .remove-item {
+  cursor: pointer;
   color: #EF2D2D;
   font-weight: 600;
   font-size: 20px;
